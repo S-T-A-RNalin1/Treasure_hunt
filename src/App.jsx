@@ -1,25 +1,17 @@
-import { useState } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import ThreeDPokeball from './components/ThreeDPokeball'
+import Dashboard from './components/Dashboard'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <h1>Treasure Hunt</h1>
-      </div>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          COUNT IS {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<ThreeDPokeball onComplete={() => window.location.href = '/dashboard'} />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }

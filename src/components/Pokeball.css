@@ -1,0 +1,282 @@
+.pokeball-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  overflow: hidden;
+  position: relative;
+  perspective: 1200px;
+}
+
+.flash-light {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  z-index: 999;
+  animation: flashEffect 0.8s ease-out;
+  pointer-events: none;
+}
+
+@keyframes flashEffect {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.pokeball {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  animation: rotate3d 4s linear infinite;
+}
+
+@keyframes rotate3d {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+  100% {
+    transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+  }
+}
+
+.pokeball.erupting {
+  animation: none;
+}
+
+.pokeball-top,
+.pokeball-bottom {
+  position: absolute;
+  width: 200px;
+  height: 100px;
+  left: 0;
+  transform-style: preserve-3d;
+}
+
+.pokeball-top {
+  background: linear-gradient(180deg, #ff4444 0%, #ff0000 50%, #cc0000 100%);
+  top: 0;
+  border-radius: 100px 100px 0 0;
+  box-shadow: inset -10px 10px 20px rgba(0, 0, 0, 0.3), inset 10px -10px 20px rgba(255, 255, 255, 0.2);
+  animation: none;
+}
+
+.pokeball.erupting .pokeball-top {
+  animation: topErupt 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+.pokeball-bottom {
+  background: linear-gradient(180deg, #ffffff 0%, #f5f5f5 50%, #e0e0e0 100%);
+  bottom: 0;
+  border-radius: 0 0 100px 100px;
+  box-shadow: inset 10px -10px 20px rgba(0, 0, 0, 0.2), inset -10px 10px 20px rgba(255, 255, 255, 0.3);
+  animation: none;
+}
+
+.pokeball.erupting .pokeball-bottom {
+  animation: bottomErupt 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+.pokeball-middle {
+  position: absolute;
+  width: 200px;
+  height: 8px;
+  background: linear-gradient(90deg, #000 0%, #333 50%, #000 100%);
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%) translateZ(0);
+  z-index: 10;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), 0 -2px 10px rgba(255, 255, 255, 0.2);
+}
+
+.pokeball-center {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), #ffffff 40%, #f0f0f0 100%);
+  border: 4px solid #000;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) translateZ(20px);
+  z-index: 11;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.6), inset -5px -5px 15px rgba(0, 0, 0, 0.2), inset 5px 5px 15px rgba(255, 255, 255, 0.3);
+}
+
+.pokeball.erupting .pokeball-center {
+  animation: centerErupt 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+@keyframes topErupt {
+  0% {
+    transform: rotateX(0deg) translateY(0) translateZ(0);
+  }
+  50% {
+    transform: rotateX(0deg) translateY(0) translateZ(0);
+  }
+  100% {
+    transform: rotateX(-120deg) translateY(-100px) translateZ(50px);
+    opacity: 0;
+  }
+}
+
+@keyframes bottomErupt {
+  0% {
+    transform: rotateX(0deg) translateY(0) translateZ(0);
+  }
+  50% {
+    transform: rotateX(0deg) translateY(0) translateZ(0);
+  }
+  100% {
+    transform: rotateX(120deg) translateY(100px) translateZ(50px);
+    opacity: 0;
+  }
+}
+
+@keyframes centerErupt {
+  0% {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.6), inset -5px -5px 15px rgba(0, 0, 0, 0.2), inset 5px 5px 15px rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%) translateZ(20px) scale(1);
+  }
+  60% {
+    transform: translate(-50%, -50%) translateZ(50px) scale(1.2);
+    box-shadow: 0 0 40px rgba(255, 255, 255, 1), inset -5px -5px 15px rgba(0, 0, 0, 0.1), inset 5px 5px 15px rgba(255, 255, 255, 0.4);
+  }
+  100% {
+    transform: translate(-50%, -50%) translateZ(80px) scale(0.8);
+    box-shadow: 0 0 60px rgba(255, 255, 255, 0.5), inset -5px -5px 15px rgba(0, 0, 0, 0.1), inset 5px 5px 15px rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* 3D Particles for eruption effect */
+.particle {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: radial-gradient(circle at 30% 30%, #ffdd00, #ffaa00 40%, #ff6600 100%);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  box-shadow: 0 0 10px rgba(255, 170, 0, 0.8);
+}
+
+.particle-1 {
+  animation: particle1 1.5s ease-out forwards;
+}
+
+.particle-2 {
+  animation: particle2 1.5s ease-out forwards;
+}
+
+.particle-3 {
+  animation: particle3 1.5s ease-out forwards;
+}
+
+.particle-4 {
+  animation: particle4 1.5s ease-out forwards;
+}
+
+.particle-5 {
+  animation: particle5 1.5s ease-out forwards;
+}
+
+.particle-6 {
+  animation: particle6 1.5s ease-out forwards;
+}
+
+@keyframes particle1 {
+  0% {
+    transform: translate(-50%, -50%) translate(0, 0) translateZ(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) translate(120px, -120px) translateZ(150px) scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes particle2 {
+  0% {
+    transform: translate(-50%, -50%) translate(0, 0) translateZ(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) translate(-120px, -120px) translateZ(150px) scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes particle3 {
+  0% {
+    transform: translate(-50%, -50%) translate(0, 0) translateZ(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) translate(120px, 120px) translateZ(150px) scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes particle4 {
+  0% {
+    transform: translate(-50%, -50%) translate(0, 0) translateZ(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) translate(-120px, 120px) translateZ(150px) scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes particle5 {
+  0% {
+    transform: translate(-50%, -50%) translate(0, 0) translateZ(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) translate(0, -150px) translateZ(150px) scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes particle6 {
+  0% {
+    transform: translate(-50%, -50%) translate(0, 0) translateZ(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) translate(0, 150px) translateZ(150px) scale(0);
+    opacity: 0;
+  }
+}
+
+.loading-text {
+  margin-top: 40px;
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+  animation: pulse 1.5s ease-in-out infinite;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
